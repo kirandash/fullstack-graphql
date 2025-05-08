@@ -12,7 +12,7 @@ const ALL_PETS = gql`
       # Always use an id for apollo to cache easily otherwise apollo will use the path to the node as the cache index and it might get less performant for apollo to update these when there is a mutation etc
       id
       name
-      typed
+      type
       img
     }
   }

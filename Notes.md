@@ -182,3 +182,29 @@ query AllCharacters($page:Int, $filter:FilterCharacter) {
 - `useQuery, useMutation` from @apollo/react-hooks
 - We can test the query from playground at: http://localhost:4000/ or using the explorer in devtools at: http://localhost:1234/
   - Recommended: use devtools
+
+### 3.3 Querying Mutations
+
+- ```graphql
+  mutation CreateAPet($newPet: NewPetInput!) {
+    addPet(input: $newPet) {
+      id
+      name
+      type
+      img
+    }
+  }
+  ```
+- variables:
+
+```json
+{
+  "newPet": {
+    "name": "batman",
+    "type": "DOG"
+  }
+}
+```
+
+- Tip: It is a good practice to keep the fields of mutation in sync with the related query. This will help us in long run with a lot of out of the box features from apollo later
+  - ex: automatic updates etc
