@@ -28,6 +28,13 @@
       "name": "batman",
       "type": "DOG",
       "user": "jBWMVGjm50l6LGwepDoty"
+    },
+    {
+      "id": "y7Z5Q1r-J86whAQ4r1GIe",
+      "createdAt": 1746685025790,
+      "name": "garfield",
+      "type": "CAT",
+      "user": "jBWMVGjm50l6LGwepDoty"
     }
   ]
 }

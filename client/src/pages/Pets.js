@@ -18,23 +18,45 @@ const ALL_PETS = gql`
   }
 `
 
+const NEW_PET = gql`
+  # ! means NewPetInput is mandatory
+  mutation CreateAPet($newPet: NewPetInput!) {
+    addPet(input: $newPet) {
+      # Returning the same fields as query so that apollo does not have to refetch but just use the data from mutation
+      id
+      name
+      type
+      img
+    }
+  }
+`
+
 export default function Pets() {
   const [modal, setModal] = useState(false)
+  // Runs the query right away
   const { data, loading, error } = useQuery(ALL_PETS)
+  // Gives us the createPet fn that we can use to run the mutation
+  // newPet: { data, loading, error } we are using namespace to avoid variable name conflicts
+  const [createPet, newPet] = useMutation(NEW_PET)
 
   const onSubmit = (input) => {
     setModal(false)
+    createPet({
+      variables: {
+        newPet: input,
+      },
+    })
   }
 
   if (modal) {
     return <NewPetModal onSubmit={onSubmit} onCancel={() => setModal(false)} />
   }
 
-  if (loading) {
+  if (loading || newPet.loading) {
     return <Loader />
   }
 
-  if (error) {
+  if (error || newPet.error) {
     return <p>error!</p>
   }
 
