@@ -155,6 +155,11 @@ query AllCharacters($page:Int, $filter:FilterCharacter) {
 
 ## 3 Apollo React
 
+- setup:
+  - npm install
+  - npm run server
+  - npm run app
+
 ### 3.1 Apollo Client & API Querying
 
 - Use apollo client dev tools to see the flat structure
@@ -163,4 +168,17 @@ query AllCharacters($page:Int, $filter:FilterCharacter) {
 
 ### 3.1 Apollo Client & API Querying
 
+- In client.js file:
+  - create new ApolloClient
+    - pass link, cache
+  - link: new HttpLink from apollo-link-http and
+  - cache: InMemoryCache from apollo-cache-inmemory
+- For now test api query call by using client.query in client.js. We will improve it later
 - Use apollo client dev tools to see the flat structure of data in the "Cache" tab
+
+### 3.2 Apollo client & Hooks
+
+- https://www.apollographql.com/docs/react/data/queries
+- `useQuery, useMutation` from @apollo/react-hooks
+- We can test the query from playground at: http://localhost:4000/ or using the explorer in devtools at: http://localhost:1234/
+  - Recommended: use devtools
