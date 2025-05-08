@@ -37,7 +37,15 @@ export default function Pets() {
   const { data, loading, error } = useQuery(ALL_PETS)
   // Gives us the createPet fn that we can use to run the mutation
   // newPet: { data, loading, error } we are using namespace to avoid variable name conflicts
-  const [createPet, newPet] = useMutation(NEW_PET)
+  const [createPet, newPet] = useMutation(NEW_PET, {
+    update(cache, { data: { addPet } }) {
+      const data = cache.readQuery({ query: ALL_PETS })
+      cache.writeQuery({
+        query: ALL_PETS,
+        data: { pets: [addPet, ...data.pets] },
+      })
+    },
+  })
 
   const onSubmit = (input) => {
     setModal(false)

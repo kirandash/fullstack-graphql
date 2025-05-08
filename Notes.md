@@ -212,3 +212,20 @@ query AllCharacters($page:Int, $filter:FilterCharacter) {
 ### 3.4 Mutations - in react
 
 - https://www.apollographql.com/docs/react/data/mutations
+
+## 4. Caching
+
+### 4.1 Caching & Synchronicity
+
+- Why is the cache out of sync?
+  - If you perform a mutation that updates or creates a single node, then apollo will update your cache automatically given the mutation and query has the same fields and id.
+  - If you perform a mutation that updates a node in a list or removes a node, you are responsible for updating any queries referencing that list or node. There are many ways to do this with apollo.
+    - Apollo does not do that because this might have a lot of side effects. When we update one item, it does not have any way to know which list it belongs to. So automatically it won't update
+- **Keeping cache in sync**:
+  - Refetch matching queries after a mutation
+    - higher latency
+  - Use update method on mutation ✅ - Standard Approach
+    - in memory update without making an API call
+  - Watch Queries
+    - these are constantly watching queries
+- https://www.apollographql.com/docs/react/data/mutations#the-update-function
