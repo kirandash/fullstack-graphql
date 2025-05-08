@@ -259,3 +259,7 @@ query AllCharacters($page:Int, $filter:FilterCharacter) {
   - How?
     - The exact same way as the server. You just have to extend the Types from your server schema. You then use a directive to access local state from your queries and mutations.
 - Do it using typeDefs and resolvers
+
+### 6.2 APP_PETS Fragment
+
+- for query and mutation. For optimistic update it is bit tricky

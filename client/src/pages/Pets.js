@@ -5,35 +5,48 @@ import PetsList from '../components/PetsList'
 import NewPetModal from '../components/NewPetModal'
 import Loader from '../components/Loader'
 
+const PETS_FIELDS = gql`
+  # fragment keyword some name on Type
+  fragment PetsFields on Pet {
+    # Always use an id for apollo to cache easily otherwise apollo will use the path to the node as the cache index and it might get less performant for apollo to update these when there is a mutation etc
+    id
+    name
+    type
+    img
+    owner {
+      id
+      # @client directive says apollo that this need to be fetched from client schema only
+      age @client
+    }
+  }
+`
+
 // Redux style action naming
 const ALL_PETS = gql`
   query AllPets {
     pets {
-      # Always use an id for apollo to cache easily otherwise apollo will use the path to the node as the cache index and it might get less performant for apollo to update these when there is a mutation etc
-      id
-      name
-      type
-      img
-      owner {
-        id
-        # @client directive says apollo that this need to be fetched from client schema only
-        age @client
-      }
+      ...PetsFields
     }
   }
+  ${PETS_FIELDS}
 `
 
 const NEW_PET = gql`
   # ! means NewPetInput is mandatory
   mutation CreateAPet($newPet: NewPetInput!) {
+    # addPet(input: $newPet) {
+    #   # Returning the same fields as query so that apollo does not have to refetch but just use the data from mutation
+    #   id
+    #   name
+    #   type
+    #   img
+    # }
+
     addPet(input: $newPet) {
-      # Returning the same fields as query so that apollo does not have to refetch but just use the data from mutation
-      id
-      name
-      type
-      img
+      ...PetsFields
     }
   }
+  ${PETS_FIELDS}
 `
 
 export default function Pets() {
@@ -69,7 +82,7 @@ export default function Pets() {
 
   const onSubmit = (input) => {
     setModal(false)
-    // this we are not showing on UI so we will add a random one. It will be replaced by real ID once we have data from BE
+    // this we are not showing on UI so we wil l add a random one. It will be replaced by real ID once we have data from BE
     const optimisticId = Math.floor(Math.random() * 10000) + ''
     createPet({
       variables: {
