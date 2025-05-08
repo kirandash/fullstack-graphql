@@ -14,6 +14,11 @@ const ALL_PETS = gql`
       name
       type
       img
+      owner {
+        id
+        # @client directive says apollo that this need to be fetched from client schema only
+        age @client
+      }
     }
   }
 `
@@ -100,6 +105,8 @@ export default function Pets() {
   if (error) {
     return <p>error!</p>
   }
+
+  console.log(data)
 
   return (
     <div className="page pets-page">

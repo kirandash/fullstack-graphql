@@ -4,6 +4,24 @@ import { HttpLink } from 'apollo-link-http'
 import { setContext } from 'apollo-link-context'
 import gql from 'graphql-tag'
 import { ApolloLink } from 'apollo-link'
+
+// Extend User schema from server on client side
+// Or create a new one from scratch
+const typeDefs = gql`
+  extend type User {
+    age: Int
+  }
+`
+
+// Resolver to resolve the new field
+const resolvers = {
+  User: {
+    age() {
+      return 32
+    },
+  },
+}
+
 /**
  * Create a new apollo client and export as default
  */
@@ -32,6 +50,8 @@ const cache = new InMemoryCache()
 const client = new ApolloClient({
   link,
   cache,
+  resolvers,
+  typeDefs,
 })
 
 // const query = gql`

@@ -246,3 +246,16 @@ query AllCharacters($page:Int, $filter:FilterCharacter) {
 
 - client.readQuery, client.writeQuery and context for apollo v2
 - or use client.refetchQuery in apollo v3
+
+## 6 Fragments
+
+- We will learn how to manage client side state using graphql and apollo
+
+### 6.1 Directives & Fragments, Client side schemas, typedefs, resolvers
+
+- Client Side Schemas
+  - Why?
+    - In addition to managing data from your API, apollo client can also local state originated from your front end app. Stuff you would normally store in something like Redux or Vuex. You can create a schema to define that state which allows you to query for that state the same way you query your API for data.
+  - How?
+    - The exact same way as the server. You just have to extend the Types from your server schema. You then use a directive to access local state from your queries and mutations.
+- Do it using typeDefs and resolvers
