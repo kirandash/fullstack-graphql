@@ -11,6 +11,10 @@ const typeDefs = gql`
   extend type User {
     age: Int
   }
+
+  extend type Pet {
+    vaccinated: Boolean!
+  }
 `
 
 // Resolver to resolve the new field
@@ -18,6 +22,11 @@ const resolvers = {
   User: {
     age() {
       return 32
+    },
+  },
+  Pet: {
+    vaccinated() {
+      return true
     },
   },
 }

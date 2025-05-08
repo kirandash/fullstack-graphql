@@ -263,3 +263,5 @@ query AllCharacters($page:Int, $filter:FilterCharacter) {
 ### 6.2 APP_PETS Fragment
 
 - for query and mutation. For optimistic update it is bit tricky
+
+### 6.3 Add a new typeDef and resolver for a client side field

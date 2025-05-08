@@ -13,6 +13,7 @@ const PETS_FIELDS = gql`
     name
     type
     img
+    vaccinated @client
     owner {
       id
       # @client directive says apollo that this need to be fetched from client schema only
