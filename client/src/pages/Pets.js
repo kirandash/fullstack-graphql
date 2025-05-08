@@ -99,6 +99,12 @@ export default function Pets() {
           name: input.name,
           type: input.type,
           img: 'https://placehold.co/600x400',
+          vaccinated: false, // @client field
+          owner: {
+            __typename: 'Owner',
+            id: 'temp-owner-id',
+            age: 0, // @client field
+          },
         },
       },
       context: { optimisticId },

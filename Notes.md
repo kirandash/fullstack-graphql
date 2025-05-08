@@ -265,3 +265,7 @@ query AllCharacters($page:Int, $filter:FilterCharacter) {
 - for query and mutation. For optimistic update it is bit tricky
 
 ### 6.3 Add a new typeDef and resolver for a client side field
+
+### 6.4 Fix optimistic update issue
+
+- make sure field names are the same
