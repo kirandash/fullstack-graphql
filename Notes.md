@@ -229,3 +229,15 @@ query AllCharacters($page:Int, $filter:FilterCharacter) {
   - Watch Queries
     - these are constantly watching queries
 - https://www.apollographql.com/docs/react/data/mutations#the-update-function
+
+## 5. Optimistic UI updates
+
+### 5.1 Optimistic UI updates
+
+- What is a Optimistic UI?
+
+  - Your UI does not wait until after a mutation operation to update itself. Instead, it anticipates the response from the API and proceeds as if the API call was sync. The the API response replaces the generated one. This gives the illusion of your being really fast.
+
+- Optimistic UI with mutations
+  - Apollo provides a simple hook that allows you to write to the local cache after a mutation.
+- https://www.apollographql.com/docs/react/performance/optimistic-ui

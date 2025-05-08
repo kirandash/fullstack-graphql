@@ -45,6 +45,8 @@ export default function Pets() {
         data: { pets: [addPet, ...data.pets] },
       })
     },
+    // Use optimisticResponse here if we don't need any variables
+    // optimisticResponse: {},
   })
 
   const onSubmit = (input) => {
@@ -53,6 +55,18 @@ export default function Pets() {
       variables: {
         newPet: input,
       },
+      // Use optimisticResponse here if we need any variables
+      optimisticResponse: {
+        // this is not shown on the schema but we should add
+        __typename: 'Mutation',
+        addPet: {
+          __typename: 'Pet',
+          id: Math.floor(Math.random() * 10000 + ''), // this we are not showing on UI so we will add a random one. It will be replaced by real ID once we have data from BE
+          name: input.name,
+          type: input.type,
+          img: 'https://placehold.co/600x400',
+        },
+      },
     })
   }
 
@@ -60,7 +74,9 @@ export default function Pets() {
     return <NewPetModal onSubmit={onSubmit} onCancel={() => setModal(false)} />
   }
 
-  if (loading || newPet.loading) {
+  // if (loading || newPet.loading) {
+  // remove newPet.loading for optimisticResponse since it will still be loading for the network call
+  if (loading) {
     return <Loader />
   }
 
