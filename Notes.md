@@ -269,3 +269,18 @@ query AllCharacters($page:Int, $filter:FilterCharacter) {
 ### 6.4 Fix optimistic update issue
 
 - make sure field names are the same
+
+### 6.5 Apollo Directives
+
+- Client:
+  - @client, @skip(variablename), @include(variablename) etc
+  - @live, @defer etc
+- Server side directives
+  - @deprecated(reason: "some reason here")
+
+## More resources
+
+- https://graphql-kit.com/graphql-voyager/
+- https://www.apollographql.com/
+- https://github.com/chentsulin/awesome-graphql
+- graphql-codegen cli: https://github.com/dotansimha/graphql-code-generator
