@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import gql from 'graphql-tag'
-import { useQuery, useMutation } from '@apollo/react-hooks'
+import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks'
 import PetsList from '../components/PetsList'
 import NewPetModal from '../components/NewPetModal'
 import Loader from '../components/Loader'
@@ -33,6 +33,7 @@ const NEW_PET = gql`
 
 export default function Pets() {
   const [modal, setModal] = useState(false)
+  const client = useApolloClient()
   // Runs the query right away
   const { data, loading, error } = useQuery(ALL_PETS)
   // Gives us the createPet fn that we can use to run the mutation
@@ -45,12 +46,26 @@ export default function Pets() {
         data: { pets: [addPet, ...data.pets] },
       })
     },
+    onError(error, variables, context) {
+      // Remove the optimistic pet from the cache
+      const data = client.readQuery({ query: ALL_PETS })
+      const optimisticId = context && context.optimisticId
+      if (optimisticId) {
+        const filteredPets = data.pets.filter((pet) => pet.id !== optimisticId)
+        client.writeQuery({
+          query: ALL_PETS,
+          data: { pets: filteredPets },
+        })
+      }
+    },
     // Use optimisticResponse here if we don't need any variables
     // optimisticResponse: {},
   })
 
   const onSubmit = (input) => {
     setModal(false)
+    // this we are not showing on UI so we will add a random one. It will be replaced by real ID once we have data from BE
+    const optimisticId = Math.floor(Math.random() * 10000) + ''
     createPet({
       variables: {
         newPet: input,
@@ -61,12 +76,13 @@ export default function Pets() {
         __typename: 'Mutation',
         addPet: {
           __typename: 'Pet',
-          id: Math.floor(Math.random() * 10000 + ''), // this we are not showing on UI so we will add a random one. It will be replaced by real ID once we have data from BE
+          id: optimisticId,
           name: input.name,
           type: input.type,
           img: 'https://placehold.co/600x400',
         },
       },
+      context: { optimisticId },
     })
   }
 
@@ -80,7 +96,8 @@ export default function Pets() {
     return <Loader />
   }
 
-  if (error || newPet.error) {
+  // if (error || newPet.error) {
+  if (error) {
     return <p>error!</p>
   }
 

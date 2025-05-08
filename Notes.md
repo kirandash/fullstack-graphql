@@ -241,3 +241,8 @@ query AllCharacters($page:Int, $filter:FilterCharacter) {
 - Optimistic UI with mutations
   - Apollo provides a simple hook that allows you to write to the local cache after a mutation.
 - https://www.apollographql.com/docs/react/performance/optimistic-ui
+
+### 5.2 Optimistic UI rollback on error
+
+- client.readQuery, client.writeQuery and context for apollo v2
+- or use client.refetchQuery in apollo v3
